@@ -115,6 +115,13 @@ function App() {
     updateTicketCount(selectedCharacterId, selectedTicketKey, -1);
   };
 
+  const handleDeleteTicketFromChip = (
+    characterId: string,
+    ticketKey: TicketKey,
+  ): void => {
+    updateTicketCount(characterId, ticketKey, -1);
+  };
+
   const handleDeleteCharacter = (characterId: string): void => {
     setCharacters((prev) => prev.filter((character) => character.id !== characterId));
   };
@@ -207,7 +214,7 @@ function App() {
               onClick={handleResetAllTickets}
               disabled={characters.length === 0}
             >
-              Почистить кэш
+              Сбросить билеты
             </button>
           </div>
         </section>
@@ -296,7 +303,20 @@ function App() {
                   <div className="summary-table__owners">
                     {row.owners.map((owner) => (
                       <span key={owner.characterId} className="owner-chip">
-                        {owner.characterName} — {owner.count}
+                        <span className="owner-chip__text">
+                          {owner.characterName} — {owner.count}
+                        </span>
+
+                        <button
+                          type="button"
+                          className="owner-chip__remove"
+                          aria-label={`Убрать 1 билет ${row.label} у ${owner.characterName}`}
+                          onClick={() =>
+                            handleDeleteTicketFromChip(owner.characterId, row.key)
+                          }
+                        >
+                          ×
+                        </button>
                       </span>
                     ))}
                   </div>

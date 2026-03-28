@@ -258,10 +258,36 @@ button {
   display: inline-flex;
   align-items: center;
   min-height: 34px;
-  padding: 6px 12px;
+  padding: 6px 8px 6px 12px;
   border-radius: 999px;
   background: rgba(124, 108, 255, 0.16);
   border: 1px solid rgba(124, 108, 255, 0.35);
+  gap: 8px;
+}
+
+.owner-chip__text {
+  display: inline-block;
+}
+
+.owner-chip__remove {
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--text);
+  cursor: pointer;
+  line-height: 1;
+  font-size: 16px;
+  padding: 0;
+  transition:
+    background-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.owner-chip__remove:hover {
+  background: rgba(255, 255, 255, 0.24);
+  transform: scale(1.05);
 }
 
 .characters-list {
