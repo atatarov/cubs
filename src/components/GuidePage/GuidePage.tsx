@@ -12,19 +12,17 @@ const GUIDE_SECTIONS: GuideSection[] = [
   ddSection,
 ];
 
-const ALL_SUBSECTION_IDS = [
-  'general-settings', 'buffs', 'minmax',
-  'support-analyzer', 'support-analyzer-example',
-  'dd-analyzer', 'dd-tips'
-];
-
 export function GuidePage() {
+  // По умолчанию ВСЕ основные разделы свернуты (пустой Set)
   const [expandedSections, setExpandedSections] = useState<Set<SectionKey>>(
-    new Set(['general', 'support', 'dd'])
+    new Set() // Пустой Set = всё свернуто
   );
+  
+  // По умолчанию ВСЕ подразделы свернуты (пустой Set)
   const [expandedSubsections, setExpandedSubsections] = useState<Set<string>>(
-    new Set(ALL_SUBSECTION_IDS)
+    new Set() // Пустой Set = всё свернуто
   );
+  
   const [modalImage, setModalImage] = useState<{ src: string; alt: string } | null>(null);
 
   const toggleSection = (sectionKey: SectionKey) => {
@@ -59,47 +57,47 @@ export function GuidePage() {
     setModalImage(null);
   };
 
-const renderImages = (subsection: any) => {
-  const images = subsection.images || (subsection.image ? [subsection.image] : []);
-  if (images.length === 0) return null;
+  const renderImages = (subsection: any) => {
+    const images = subsection.images || (subsection.image ? [subsection.image] : []);
+    if (images.length === 0) return null;
 
-  return (
-    <div className={styles.guideImagesGrid}>
-      {images.map((img: any, idx: number) => (
-        <div 
-          key={idx}
-          className={styles.guideImageContainer}
-          onClick={() => openImageModal(img.src, img.alt)}
-        >
-          <img
-            src={img.src}
-            alt={img.alt}
-            className={`${styles.guideImage} ${img.size === 'small' ? styles.guideImageSmall : styles.guideImageLarge}`}
-            loading="lazy"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
-              console.error(`Не удалось загрузить изображение: ${img.src}`);
-            }}
-          />
-          <div className={styles.guideImageZoom}>
-            🔍 Нажмите для увеличения
+    return (
+      <div className={styles.guideImagesGrid}>
+        {images.map((img: any, idx: number) => (
+          <div 
+            key={idx}
+            className={styles.guideImageContainer}
+            onClick={() => openImageModal(img.src, img.alt)}
+          >
+            <img
+              src={img.src}
+              alt={img.alt}
+              className={`${styles.guideImage} ${img.size === 'small' ? styles.guideImageSmall : styles.guideImageLarge}`}
+              loading="lazy"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                console.error(`Не удалось загрузить изображение: ${img.src}`);
+              }}
+            />
+            <div className={styles.guideImageZoom}>
+              🔍 Нажмите для увеличения
+            </div>
+            {img.caption && (
+              <p className={styles.guideImageCaption}>
+                {img.caption}
+              </p>
+            )}
           </div>
-          {img.caption && (
-            <p className={styles.guideImageCaption}>
-              {img.caption}
-            </p>
-          )}
-        </div>
-      ))}
-    </div>
-  );
-};
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className={styles.guidePage}>
       <div className={styles.guideHeader}>
-        <h1 className={styles.guideHeader__title}>📜База для новичка</h1>
+        <h1 className={styles.guideHeader__title}>📜 База для новичка</h1>
       </div>
 
       <div className={styles.guideSections}>
@@ -133,10 +131,8 @@ const renderImages = (subsection: any) => {
 
                     {expandedSubsections.has(subsection.id) && (
                       <div className={styles.guideSubsection__content}>
-                        {/* Рендер картинок */}
                         {renderImages(subsection)}
                         
-                        {/* Текст */}
                         <ul className={styles.guideSubsection__list}>
                           {subsection.content.map((item: string, index: number) => {
                             const lines = item.split('\n');
