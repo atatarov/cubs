@@ -1,0 +1,149 @@
+.guidePage {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.guideHeader {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.guideHeader__title {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.guideHeader__subtitle {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.guideSections {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.guideSection {
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: rgba(25, 29, 51, 0.94);
+  backdrop-filter: blur(4px);
+}
+
+.guideSection__header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: rgba(34, 39, 68, 0.8);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s;
+  color: var(--text);
+}
+
+.guideSection__header:hover {
+  background: rgba(52, 59, 103, 0.8);
+}
+
+.guideSection__toggle {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.guideSection__title {
+  color: var(--text);
+}
+
+.guideSection__content {
+  padding: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.guideSubsection {
+  margin-bottom: 1rem;
+}
+
+.guideSubsection:last-child {
+  margin-bottom: 0;
+}
+
+.guideSubsection__header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-weight: 500;
+  color: var(--muted);
+  border-radius: 0.375rem;
+  transition: all 0.2s;
+}
+
+.guideSubsection__header:hover {
+  background: rgba(34, 39, 68, 0.6);
+  color: var(--text);
+}
+
+.guideSubsection__toggle {
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.guideSubsection__title {
+  font-size: 0.9rem;
+}
+
+.guideSubsection__content {
+  margin-left: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--border);
+}
+
+.guideSubsection__content li {
+  margin: 0.5rem 0;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.guideTip {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: rgba(228, 95, 118, 0.12);
+  border-left: 4px solid var(--danger);
+  border-radius: 0.5rem;
+  color: var(--text);
+  font-size: 0.875rem;
+}
+
+.guideTip strong {
+  color: var(--danger);
+}
+
+/* Медиа-запросы */
+@media (max-width: 640px) {
+  .guideSection__title {
+    font-size: 0.9rem;
+  }
+  
+  .guideSubsection__title {
+    font-size: 0.85rem;
+  }
+  
+  .guideSubsection__content {
+    margin-left: 0.5rem;
+  }
+}
