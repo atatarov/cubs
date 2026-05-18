@@ -126,24 +126,98 @@
   white-space: pre-wrap;
 }
 
-/* Стили для изображений */
-.guideImageContainer {
-  margin-bottom: 1rem;
-  text-align: center;
+/* Сетка для картинок */
+.guideImagesGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
+/* Контейнер для одной картинки */
+.guideImageContainer {
+  flex: 0 0 auto;
+  width: auto;
+  max-width: 100%;
+  text-align: center;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  transition: all 0.2s;
+}
+
+/* Для маленьких картинок - не растягиваем, ставим по центру */
+.guideImageContainer:has(.guideImageSmall) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.guideImageContainer:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Само изображение */
 .guideImage {
   max-width: 100%;
   height: auto;
   border-radius: 0.5rem;
   border: 1px solid var(--border);
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: block;
+  margin: 0 auto;
 }
 
+/* Стиль для маленьких картинок (иконки баффов) */
+.guideImageSmall {
+  max-width: 120px;
+  width: auto;
+}
+
+.guideImageContainer:hover .guideImage {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Индикатор увеличения */
+.guideImageZoom {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+
+.guideImageContainer {
+  position: relative;
+}
+
+.guideImageContainer:hover .guideImageZoom {
+  opacity: 1;
+}
+
+/* Подпись под картинкой */
 .guideImageCaption {
   margin-top: 0.5rem;
   font-size: 0.8rem;
   color: var(--muted);
   text-align: center;
+  max-width: 280px;
+}
+
+/* Специальный класс для больших картинок (full-buff, buf-common) */
+.guideImageLarge {
+  max-width: 100%;
+  width: auto;
 }
 
 .guideTip {
@@ -160,23 +234,7 @@
   color: var(--danger);
 }
 
-@media (max-width: 640px) {
-  .guideSection__title {
-    font-size: 0.9rem;
-  }
-  
-  .guideSubsection__title {
-    font-size: 0.85rem;
-  }
-  
-  .guideSubsection__content {
-    margin-left: 0.5rem;
-  }
-}
-
-
-/* Добавьте в конец файла GuidePage.module.css */
-
+/* Дополнительные стили для форматирования */
 .contentParagraph {
   margin: 0.5rem 0;
   line-height: 1.5;
@@ -221,49 +279,29 @@
   margin: 0.25rem 0;
 }
 
-/* Добавьте в конец GuidePage.module.css */
-
-.guideImageContainer {
-  position: relative;
-  margin-bottom: 1rem;
-  text-align: center;
-  cursor: pointer;
-}
-
-.guideImage {
-  max-width: 100%;
-  height: auto;
-  border-radius: 0.5rem;
-  border: 1px solid var(--border);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.guideImageContainer:hover .guideImage {
-  transform: scale(1.02);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.guideImageZoom {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  opacity: 0;
-  transition: opacity 0.2s;
-  pointer-events: none;
-}
-
-.guideImageContainer:hover .guideImageZoom {
-  opacity: 1;
-}
-
-.guideImageCaption {
-  margin-top: 0.5rem;
-  font-size: 0.8rem;
-  color: var(--muted);
-  text-align: center;
+@media (max-width: 640px) {
+  .guideSection__title {
+    font-size: 0.9rem;
+  }
+  
+  .guideSubsection__title {
+    font-size: 0.85rem;
+  }
+  
+  .guideSubsection__content {
+    margin-left: 0.5rem;
+  }
+  
+  .guideImagesGrid {
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .guideImageContainer {
+    width: 100%;
+  }
+  
+  .guideImageCaption {
+    max-width: 100%;
+  }
 }

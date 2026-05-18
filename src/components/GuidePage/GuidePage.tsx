@@ -59,13 +59,47 @@ export function GuidePage() {
     setModalImage(null);
   };
 
+const renderImages = (subsection: any) => {
+  const images = subsection.images || (subsection.image ? [subsection.image] : []);
+  if (images.length === 0) return null;
+
+  return (
+    <div className={styles.guideImagesGrid}>
+      {images.map((img: any, idx: number) => (
+        <div 
+          key={idx}
+          className={styles.guideImageContainer}
+          onClick={() => openImageModal(img.src, img.alt)}
+        >
+          <img
+            src={img.src}
+            alt={img.alt}
+            className={`${styles.guideImage} ${img.size === 'small' ? styles.guideImageSmall : styles.guideImageLarge}`}
+            loading="lazy"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+              console.error(`Не удалось загрузить изображение: ${img.src}`);
+            }}
+          />
+          <div className={styles.guideImageZoom}>
+            🔍 Нажмите для увеличения
+          </div>
+          {img.caption && (
+            <p className={styles.guideImageCaption}>
+              {img.caption}
+            </p>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
+
   return (
     <div className={styles.guidePage}>
       <div className={styles.guideHeader}>
-        <h1 className={styles.guideHeader__title}>📜 Памятка по игре</h1>
-        <p className={styles.guideHeader__subtitle}>
-          Нажмите на любой заголовок, чтобы развернуть или свернуть информацию
-        </p>
+        <h1 className={styles.guideHeader__title}>📜База для новичка</h1>
       </div>
 
       <div className={styles.guideSections}>
@@ -99,34 +133,12 @@ export function GuidePage() {
 
                     {expandedSubsections.has(subsection.id) && (
                       <div className={styles.guideSubsection__content}>
-                        {subsection.image && (
-                          <div 
-                            className={styles.guideImageContainer}
-                            onClick={() => openImageModal(subsection.image!.src, subsection.image!.alt)}
-                          >
-                            <img
-                              src={subsection.image.src}
-                              alt={subsection.image.alt}
-                              className={styles.guideImage}
-                              loading="lazy"
-                              onError={(e) => {
-                                const target = e.target as HTMLImageElement;
-                                target.style.display = 'none';
-                                console.error(`Не удалось загрузить изображение: ${subsection.image?.src}`);
-                              }}
-                            />
-                            <div className={styles.guideImageZoom}>
-                              🔍 Нажмите для увеличения
-                            </div>
-                            {subsection.image.caption && (
-                              <p className={styles.guideImageCaption}>
-                                {subsection.image.caption}
-                              </p>
-                            )}
-                          </div>
-                        )}
+                        {/* Рендер картинок */}
+                        {renderImages(subsection)}
+                        
+                        {/* Текст */}
                         <ul className={styles.guideSubsection__list}>
-                          {subsection.content.map((item, index) => {
+                          {subsection.content.map((item: string, index: number) => {
                             const lines = item.split('\n');
                             return lines.map((line, lineIndex) => (
                               <li key={`${index}-${lineIndex}`}>
