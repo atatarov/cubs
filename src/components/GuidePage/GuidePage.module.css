@@ -113,10 +113,37 @@
   border-left: 2px solid var(--border);
 }
 
-.guideSubsection__content li {
+.guideSubsection__list {
+  margin: 0.5rem 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.guideSubsection__list li {
   margin: 0.5rem 0;
   color: var(--text);
   line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+/* Стили для изображений */
+.guideImageContainer {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.guideImage {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+}
+
+.guideImageCaption {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-align: center;
 }
 
 .guideTip {
@@ -133,7 +160,6 @@
   color: var(--danger);
 }
 
-/* Медиа-запросы */
 @media (max-width: 640px) {
   .guideSection__title {
     font-size: 0.9rem;
@@ -146,4 +172,51 @@
   .guideSubsection__content {
     margin-left: 0.5rem;
   }
+}
+
+
+/* Добавьте в конец файла GuidePage.module.css */
+
+.contentParagraph {
+  margin: 0.5rem 0;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.contentSpacer {
+  height: 0.5rem;
+}
+
+.guideSubsection__contentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.guideSubsection__contentWrapper strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.guideSubsection__contentWrapper em {
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.guideSubsection__contentWrapper code {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: var(--accent-hover);
+  display: inline-block;
+  width: fit-content;
+}
+
+.guideSubsection__contentWrapper br {
+  display: block;
+  margin: 0.25rem 0;
 }

@@ -7,6 +7,11 @@ interface Subsection {
   id: string;
   title: string;
   content: string[];
+  image?: {
+    src: string;
+    alt: string;
+    caption?: string;
+  };
 }
 
 interface GuideSection {
@@ -57,18 +62,27 @@ const GUIDE_SECTIONS: GuideSection[] = [
         id: 'support-analyzer',
         title: '2.1 Настройка Анализатора боя для саппорта',
         content: [
-          'Фильтр: аптайм основных баффов (минимально 95%)',
-          'Трекер: кто перебивает дебаффы',
-          'Игнорировать исходящий урон',
+          'Эффективность увеличения силы атаки показывает сколько процентов урона было нанесено под красным бафом саппорта',
+          'Эффективность увеличения урона I - сколько было нанесено урона под желтым бафом (зетка)',
+          '',
+          'Минимум нужно держать 80 - 80 - 50, все что ниже считается плохо',
+          '',
         ],
+        image: {
+          src: './images/analizator-sup-settings.jpg',
+          alt: 'Настройки анализатора боя для саппорта',
+          caption: 'Настройки фильтров анализатора боя',
+        },
       },
       {
-        id: 'support-macros',
-        title: '2.2 Полезные макросы',
-        content: [
-          '`/focus [@player]` – фикс фокуса',
-          '`/cancelaura Вихрь` – отмена опасных эффектов',
-        ],
+        id: 'support-analyzer-example',
+        title: 'Пример настроенного анализатора боя',
+        content: [],
+        image: {
+          src: './images/sup-analizator.jpg',
+          alt: 'Пример работы анализатора боя',
+          caption: 'Анализатор боя с настроенными фильтрами',
+        },
       },
     ],
   },
@@ -103,7 +117,7 @@ export function GuidePage() {
     new Set(['general', 'support', 'dd'])
   );
   const [expandedSubsections, setExpandedSubsections] = useState<Set<string>>(
-    new Set(['general-settings', 'buffs', 'minmax', 'support-analyzer', 'support-macros', 'dd-analyzer', 'dd-tips'])
+    new Set(['general-settings', 'buffs', 'minmax', 'support-analyzer', 'support-analyzer-example', 'dd-analyzer', 'dd-tips'])
   );
 
   const toggleSection = (sectionKey: SectionKey) => {
@@ -169,11 +183,45 @@ export function GuidePage() {
                     </button>
 
                     {expandedSubsections.has(subsection.id) && (
-                      <ul className={styles.guideSubsection__content}>
-                        {subsection.content.map((item, index) => (
-                          <li key={index}>{item}</li>
-                        ))}
-                      </ul>
+                      <div className={styles.guideSubsection__content}>
+                        {/* Сначала картинка, если есть */}
+                        {subsection.image && (
+                          <div className={styles.guideImageContainer}>
+                            <img
+                              src={subsection.image.src}
+                              alt={subsection.image.alt}
+                              className={styles.guideImage}
+                              loading="lazy"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.style.display = 'none';
+                                const caption = target.nextElementSibling;
+                                if (caption) {
+                                  (caption as HTMLElement).style.display = 'none';
+                                }
+                                console.error(`Не удалось загрузить изображение: ${subsection.image?.src}`);
+                              }}
+                            />
+                            {subsection.image.caption && (
+                              <p className={styles.guideImageCaption}>
+                                {subsection.image.caption}
+                              </p>
+                            )}
+                          </div>
+                        )}
+                        {/* Потом текст */}
+                        <ul className={styles.guideSubsection__list}>
+                          {subsection.content.map((item, index) => {
+                            // Обрабатываем переносы строк
+                            const lines = item.split('\n');
+                            return lines.map((line, lineIndex) => (
+                              <li key={`${index}-${lineIndex}`}>
+                                {line}
+                              </li>
+                            ));
+                          })}
+                        </ul>
+                      </div>
                     )}
                   </div>
                 ))}
