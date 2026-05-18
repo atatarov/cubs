@@ -17,7 +17,7 @@ function App() {
     // Если есть сохранённая страница и она валидна - используем её, иначе 'tickets'
     return savedPage && (savedPage === 'tickets' || savedPage === 'guide') 
       ? savedPage 
-      : 'tickets';
+      : 'guide';
   });
 
   // Сохраняем выбранную страницу в localStorage при её изменении
